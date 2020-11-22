@@ -1,0 +1,34 @@
+
+@api = "http://localhost:4000/api/v1/auth"
+POST {{api}}/signup
+
+# {
+#   "status": "active",
+#   "images": [],
+#   "profile_img": "defaultImage",
+#   "_id": "5fb9a33c27d3551a75d9ad94",
+#   "name": "test name",
+#   "lastname": "test last name",
+#   "email": "test@test.com",
+#   "password": "passwordtest",
+#   "createdAt": "2020-11-21T23:31:08.765Z",
+#   "updatedAt": "2020-11-21T23:31:08.765Z",
+#   "__v": 0
+# }
+
+{
+    "email": "test@test.com",
+    "password":"passwordtest",
+    "name" : "test name",
+    "lastname" : "test last name"
+}
+###
+POST {{api}}/signin
+
+{
+    "email": "test@test.com",
+    "password":"passwordtest"
+}
+###
+GET {{api}}/signin
+

@@ -1,13 +1,15 @@
 import {Document} from "mongoose"
+import IUser from "../Users/IUsers"
 export default interface IProducts extends Document {
-    name : string
+    name : string,
+    _model : string
+    serial:string
     price : number
     description? : string
-    creatorId : string
     quantity? : number
-    soldTotal : number
-    owner : string
+    soldTotal?: number
+    ownerId : string
     isSold : boolean
     setStockProduct:(quantity:number)=>void
-    sold: ()=>void
+    sold: (to:IUser)=>void
 }

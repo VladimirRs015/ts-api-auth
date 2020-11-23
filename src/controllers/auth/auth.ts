@@ -1,15 +1,13 @@
 // import App from "../../App";
-import {Router} from "express"
-import passport from "passport";
+import {RequestHandler, Router} from "express"
+import passport ,{AuthenticateOptions} from "passport";
 import UserModel from "../../models/Users/users"
 import {ISimpleUser} from "../../models/Users/IUsers";
 import users from "../../models/Users/users";
+import { notToBeAuthenticated, toBeAuthenticated } from "../../middlewares/Authenticated";
 const router = Router();
 
-// serializer
-router.post('/signin',passport.authenticate('local',{
-    failureMessage:'The username or the password is incorrect',
-}),(req,res)=>{
+const signUpHandler:RequestHandler = (req,res)=>{
     const {images,profile_img,name,lastname,email,_id}:ISimpleUser  = req.user as ISimpleUser;
     res.status(200).json({
         images,
@@ -19,10 +17,24 @@ router.post('/signin',passport.authenticate('local',{
         email,
         _id,
     });
+}
+
+router.post('/signin',
+   [
+    notToBeAuthenticated,
+    passport.authenticate('local',{
+    failureMessage:'The username or the password is incorrect',
+})],signUpHandler);
+
+router.get('/signout',toBeAuthenticated,(req,res)=>{
+    req.logout()
+    res.status(200).json({
+        message : 'session closed'
+    })
 });
+
 router.post('/signup',async (req,res)=>{
     try{
-        
         let newUser = new UserModel({
             name : req.body.name,
             lastname : req.body.lastname,

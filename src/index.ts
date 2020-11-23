@@ -5,6 +5,9 @@ import logger from "morgan";
 import {config as dontenvConfig} from "dotenv";
 import config from "./config/config";
 
+// Routes 
+import Products from "./routes/products/products.routes";
+App.use(Products);
 
 // config 
 import "./config/db.connection";
@@ -13,6 +16,7 @@ dontenvConfig();
 //Middlewares
 App.use(cookieParser(config.SECRET));
 App.use(logger('dev'));
+
 App.set('PORT',config.PORT);
 
 App.listen(App.get('PORT'),()=>{

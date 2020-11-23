@@ -5,6 +5,8 @@ import {Strategy as LocalStrategy } from "passport-local"
 import IUser from "./models/Users/IUsers";
 import UserModel from "./models/Users/users";
 import CookiePaser from "cookie-parser"
+import {v4 as uuid} from "uuid"
+
 // Routes 
 import Auth from "./controllers/auth/auth";
 
@@ -19,11 +21,21 @@ App.use(expressSession({
     secret: config.SECRET ,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { 
+      secure: false,
+      path:'/',
+      // 24 ahours 30*24*60*60*1000
+      maxAge : 24 * 60 * 60 ,
+      httpOnly:true,
+     },
+     genid(req){
+      return uuid();
+     }
 }));
 
 App.use(passport.initialize());
-App.use(passport.session());
+App.use(passport.session(
+));
 
 // passport config 
 passport.serializeUser(function(user:IUser, done:Function) {

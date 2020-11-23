@@ -28,6 +28,7 @@
     "@types/bcrypt": "^3.0.0",
     "@types/crypto-js": "^4.0.1",
     "@types/cryptojs": "^3.1.29",
+    "@types/uuid": "^8.3.0",
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
@@ -35,6 +36,7 @@
     "mongoose": "^5.10.15",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "uuid": "^8.3.1"
   }
 }

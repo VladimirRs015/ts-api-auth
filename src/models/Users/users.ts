@@ -16,7 +16,6 @@ const Users = new Schema({
   profile_img: {type:String,required:false,default:'defaultImage'}
 },{timestamps:true});
 
-
 Users.pre('save',async function(next:Function){
   let user = this as IUsers;
   if(!user.isModified('password')) return next();
@@ -31,11 +30,20 @@ Users.pre('save',async function(next:Function){
       next(error)
     }
   return next();
-})
+});
+
 // Must return a object that implements IUsers interface
 Users.methods.validPassword = async function(password:string){
- let user:IUsers = this as IUsers
- let res = await bcrypt.compare(password,user.password)
- return res
+ let user:IUsers = this as IUsers;
+ let res = await bcrypt.compare(password,user.password);
+ return res;
 }
+Users.methods.setPhotos = function(path:string){
+
+}
+Users.methods.deletePhotos = function(path:string){
+  
+}
+
+
 export default model<IUsers>('Users',Users);

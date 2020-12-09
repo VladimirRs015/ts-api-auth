@@ -6,10 +6,12 @@ export default interface IProducts extends Document {
     serial:string
     price : number
     description? : string
-    quantity? : number
+    quantity : number
     soldTotal?: number
     ownerId : string
     isSold : boolean
+    category : string[]
+    images : string[]
     setStockProduct:(quantity:number)=>void
-    sold: (to:IUser)=>void
+    sold: (to:IUser,quantity:number)=>void
 }

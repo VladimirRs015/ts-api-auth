@@ -6,9 +6,10 @@ import IUser from "./models/Users/IUsers";
 import UserModel from "./models/Users/users";
 import CookiePaser from "cookie-parser"
 import {v4 as uuid} from "uuid"
-
+import cors from "cors"
 // Routes 
 import Auth from "./controllers/auth/auth";
+import Products from "./routes/products/products.routes"
 
 import config from './config/config'
 // Middlewares
@@ -16,7 +17,7 @@ const App = express();
 App.use(express.json());
 App.use(CookiePaser(config.SECRET));
 App.use(express.urlencoded({extended:true}));
-
+App.use(cors({origin:'*'}))
 App.use(expressSession({
     secret: config.SECRET ,
     resave: false,
@@ -29,7 +30,7 @@ App.use(expressSession({
       httpOnly:true,
      },
      genid(req){
-      return uuid();
+       return uuid();
      }
 }));
 
@@ -63,7 +64,10 @@ passport.deserializeUser(function(id:string, done) {
 								return done(null,user)
           else
             return done(null,false,{message:'Worng email'}); 
-  }));
-
+  })); 
 App.use(`${config.API_VERSION}/auth` ,Auth);
+App.use(`${config.API_VERSION}` ,Products);
+
+
+
 export default App;
